@@ -18,8 +18,7 @@ import java.math.BigDecimal;
 public class Kart {
 
     private LocalTime hora;
-    private String nomePiloto;
-    private String codigoPiloto;
+    private Piloto piloto;
     private Integer numeroVoltas;
     private LocalTime tempoVolta;
     private BigDecimal velocidadeMediaVolta;

@@ -2,6 +2,7 @@ package br.com.cubotecnologia.kartrank.service;
 
 import br.com.cubotecnologia.kartrank.model.Kart;
 import br.com.cubotecnologia.kartrank.model.KartHankEnum;
+import br.com.cubotecnologia.kartrank.model.Piloto;
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -57,8 +59,7 @@ public class KartRankParser implements IKartRankParser {
             return Kart.builder() //
                     .hora(LocalTime.parse(get(header, KartHankEnum.HORA, fields))) //
                     .numeroVoltas(Integer.parseInt(get(header, KartHankEnum.NUM_VOLTAS, fields)))
-                    .codigoPiloto(pilotoParse[0])
-                    .nomePiloto(pilotoParse[1])
+                    .piloto(new Piloto(pilotoParse[0],pilotoParse[1]))
                     .tempoVolta(fmt.parseLocalTime(get(header, KartHankEnum.TEMPO_VOLTA, fields)))
                     .velocidadeMediaVolta((BigDecimal) df.parseObject(get(header, KartHankEnum.VELOCIDADE_MEDIA_VOLTA, fields)))
                     .build();

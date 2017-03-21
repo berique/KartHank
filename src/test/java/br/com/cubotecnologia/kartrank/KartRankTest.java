@@ -18,7 +18,14 @@ public class KartRankTest {
 
     @Test
     public void testReadFile() {
-        List<Kart> karts = kartRank.readFile(this.getClass().getResourceAsStream("/input1.txt"));
+        List<String> linhas = kartRank.readFile(this.getClass().getResourceAsStream("/input1.txt"));
+        assertThat(linhas.size(), Is.is(24));
+    }
+
+    @Test
+    public void testParse() {
+        List<String> linhas = kartRank.readFile(this.getClass().getResourceAsStream("/input1.txt"));
+        List<Kart> karts = kartRank.parse(linhas);
         assertThat(karts.isEmpty(), Is.is(false));
         assertThat(karts.size(), Is.is(23));
     }

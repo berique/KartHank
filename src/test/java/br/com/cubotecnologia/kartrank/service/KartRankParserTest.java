@@ -29,7 +29,7 @@ public class KartRankParserTest implements Constants {
         Kart kart = kartRankParser.readLine(header, LINE_BODY);
         assertThat(kart.getHora().toString(), Is.is("23:49:08.277"));
         assertThat(kart.getNumeroVoltas(), Is.is(1));
-        assertThat(kart.getNomePiloto(), Is.is("F.MASSA"));
+        assertThat(kart.getPiloto().getNome(), Is.is("F.MASSA"));
         assertThat(kart.getTempoVolta().toString(), Is.is("00:01:02.852"));
     }
 
