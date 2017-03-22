@@ -29,7 +29,7 @@ public class KartRankPresent {
 
     public void show(List<Sumario> sumarios, Duration melhorVoltaCorrida) {
         System.out.printf(PRINTF, "Posição Chegada", "Código Piloto", "Nome Piloto", "Qtde Voltas Completadas", "Tempo Total de Prova", "Melhor volta", "Tempo após o vencedor");
-        System.out.println(new String(new char[REPEAT]).replace("\0", "-"));
+        System.out.println(repeatString("-", REPEAT));
         for ( Sumario sumario: sumarios) {
             String posicaoChegada = sumario.getPosicaoChegada().toString();
             String codigoPiloto = sumario.getPiloto().getCodigo();
@@ -40,7 +40,11 @@ public class KartRankPresent {
             String aposVencedor = formatter.print(sumario.getAposVencedor().toPeriod());
             System.out.printf(PRINTF, posicaoChegada, codigoPiloto, nomePiloto, quantidadeVoltas, tempoTotalProva, melhorVolta, aposVencedor);
         }
-        System.out.println(new String(new char[REPEAT]).replace("\0", "-"));
+        System.out.println(repeatString("-", REPEAT));
         System.out.printf("%20s%25s\n","Melhor Volta da Corrida:", formatter.print(melhorVoltaCorrida.toPeriod()));
+    }
+
+    private String repeatString(String chr, int timesRepeat) {
+        return new String(new char[timesRepeat]).replace("\0", chr);
     }
 }
