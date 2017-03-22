@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.joda.time.Duration;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 
@@ -14,14 +15,14 @@ import java.math.BigDecimal;
  */
 @Getter
 @Setter
-@ToString
 @Builder
-public class Kart {
-
-    private LocalTime hora;
+@ToString
+public class Sumario {
     private Piloto piloto;
-    private Integer numeroVoltas;
-    private Period tempoVolta;
-    private BigDecimal velocidadeMediaVolta;
-
+    private Integer posicaoChegada;
+    private Integer quantidadeVoltas;
+    private Period tempoTotalProva;
+    private Period melhorVolta;
+    private BigDecimal velocidadeMedia;
+    private BigDecimal aposVencedor;
 }

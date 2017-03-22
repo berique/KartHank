@@ -47,28 +47,12 @@ public class KartRankBusinessTest {
                 "23:54:57.757\t  011 – S.VETTEL\t\t\t  3\t\t1:18.097\t\t\t35,633";
         BODY = text.split("\\r?\\n");
     }
-    @Test
-    public void testFilter() {
-        String[] split = BODY;
-        KartRank kartRank = new KartRank(new KartRankParser(new KartRankUtils()));
-        List<Kart> karts = kartRankBusiness.filter(kartRank.parse(Arrays.asList(split)));
-        assertThat(karts.size(), Is.is(5));
-
-    }
 
     @Test
-    public void testMenorTempo() {
-        String[] split = BODY;
-        KartRank kartRank = new KartRank(new KartRankParser(new KartRankUtils()));
-        List<Kart> karts = kartRankBusiness.menorTempo(kartRankBusiness.filter(kartRank.parse(Arrays.asList(split))));
-
-    }
-
-    @Test
-    public void testCalcularTempo(){
+    public void testCalcularRanking(){
         String[] split = BODY;
         KartRank kartRank = new KartRank(new KartRankParser(new KartRankUtils()));
         List<Kart> karts = kartRank.parse(Arrays.asList(split));
-        kartRankBusiness.calcularTempo(karts, kartRankBusiness.filter(karts));
+        kartRankBusiness.calcularRanking(karts);
     }
 }

@@ -60,7 +60,7 @@ public class KartRankParser implements IKartRankParser {
                     .hora(LocalTime.parse(get(header, KartHankEnum.HORA, fields))) //
                     .numeroVoltas(Integer.parseInt(get(header, KartHankEnum.NUM_VOLTAS, fields)))
                     .piloto(new Piloto(pilotoParse[0],pilotoParse[1]))
-                    .tempoVolta(fmt.parseLocalTime(get(header, KartHankEnum.TEMPO_VOLTA, fields)))
+                    .tempoVolta(KartRankUtils.PERIOD_FORMATTER.parsePeriod(get(header, KartHankEnum.TEMPO_VOLTA, fields)))
                     .velocidadeMediaVolta((BigDecimal) df.parseObject(get(header, KartHankEnum.VELOCIDADE_MEDIA_VOLTA, fields)))
                     .build();
         } catch (ParseException e) {
