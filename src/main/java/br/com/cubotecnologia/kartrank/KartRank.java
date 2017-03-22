@@ -1,6 +1,7 @@
 package br.com.cubotecnologia.kartrank;
 
 import br.com.cubotecnologia.kartrank.model.Kart;
+import br.com.cubotecnologia.kartrank.model.Piloto;
 import br.com.cubotecnologia.kartrank.service.IKartRankParser;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,10 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.util.*;
 
 /**
  * Created by henriquemoreno on 21/03/17.
@@ -64,8 +63,33 @@ public class KartRank {
                 cnt++;
                 continue;
             }
-            karts.add(kartRankParser.readLine(header, line));
+            try {
+                karts.add(kartRankParser.readLine(header, line));
+            } catch (ParseException e) {
+                log.error(e.getMessage(), e);
+            }
         }
         return karts;
+    }
+
+    public Map<Piloto, List<Kart>> groupByPiloto(List<Kart> karts) {
+        Map<Piloto, List<Kart>> groupByPiloto = new HashMap<Piloto, List<Kart>>();
+        for (Kart kart : karts) {
+            if (groupByPiloto.get(kart.getPiloto()) == null) {
+                groupByPiloto.put(kart.getPiloto(), new ArrayList<Kart>());
+            }
+            groupByPiloto.get(kart.getPiloto()).add(kart);
+        }
+        for (List<Kart> karts1 : groupByPiloto.values()) {
+            Collections.sort(karts1, new Comparator<Kart>() {
+                public int compare(Kart o1, Kart o2) {
+                    if (o1.getNumeroVoltas() < o2.getNumeroVoltas()) {
+                        return -1;
+                    }
+                    return 1;
+                }
+            });
+        }
+        return groupByPiloto;
     }
 }

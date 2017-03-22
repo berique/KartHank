@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.joda.time.Duration;
-import org.joda.time.LocalTime;
-import org.joda.time.Period;
 
 import java.math.BigDecimal;
 
@@ -21,8 +19,9 @@ public class Sumario {
     private Piloto piloto;
     private Integer posicaoChegada;
     private Integer quantidadeVoltas;
-    private Period tempoTotalProva;
-    private Period melhorVolta;
+    private Duration duracaoProva;
+    private Duration tempoTotalProva;
+    private Duration melhorVolta;
     private BigDecimal velocidadeMedia;
-    private BigDecimal aposVencedor;
+    private Duration aposVencedor;
 }

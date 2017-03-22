@@ -1,6 +1,6 @@
 package br.com.cubotecnologia.kartrank.service;
 
-import br.com.cubotecnologia.kartrank.model.Constants;
+import br.com.cubotecnologia.kartrank.model.ConstantsTest;
 import br.com.cubotecnologia.kartrank.model.Kart;
 import br.com.cubotecnologia.kartrank.model.KartHankEnum;
 import org.hamcrest.core.Is;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by henriquemoreno on 21/03/17.
  */
-public class KartRankParserTest implements Constants {
+public class KartRankParserTest implements ConstantsTest {
     private KartRankParser kartRankParser = new KartRankParser(new KartRankUtils());
 
     @Test
@@ -30,7 +30,7 @@ public class KartRankParserTest implements Constants {
         assertThat(kart.getHora().toString(), Is.is("23:49:08.277"));
         assertThat(kart.getNumeroVoltas(), Is.is(1));
         assertThat(kart.getPiloto().getNome(), Is.is("F.MASSA"));
-        assertThat(KartRankUtils.PERIOD_FORMATTER.print(kart.getTempoVolta()), Is.is("1:2.852"));
+        assertThat(IKartRankParser.PERIOD_FORMATTER.print(kart.getTempoVolta().toPeriod()), Is.is("1:2.852"));
     }
 
 }

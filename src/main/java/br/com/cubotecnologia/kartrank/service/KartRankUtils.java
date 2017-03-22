@@ -1,19 +1,9 @@
 package br.com.cubotecnologia.kartrank.service;
 
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
-
 /**
  * Created by henriquemoreno on 21/03/17.
  */
 public class KartRankUtils implements IKartRankUtils {
-    public static final PeriodFormatter PERIOD_FORMATTER = new PeriodFormatterBuilder()
-            .printZeroAlways()
-            .appendMinutes()
-            .appendLiteral(":")
-            .printZeroAlways()
-            .appendSecondsWithOptionalMillis()
-            .toFormatter();
 
     protected String removeTabAndSpaceExcess(String line) {
         return line.replaceAll("\\s{2,}|\t{2,}", "|");

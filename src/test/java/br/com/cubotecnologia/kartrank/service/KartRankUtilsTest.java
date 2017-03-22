@@ -1,15 +1,15 @@
 package br.com.cubotecnologia.kartrank.service;
 
-import br.com.cubotecnologia.kartrank.model.Constants;
+import br.com.cubotecnologia.kartrank.model.ConstantsTest;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by henriquemoreno on 21/03/17.
  */
-public class KartRankUtilsTest extends KartRankUtils implements Constants {
+public class KartRankUtilsTest extends KartRankUtils implements ConstantsTest {
     private KartRankUtils kartRankUtils = new KartRankUtils();
 
     @Test

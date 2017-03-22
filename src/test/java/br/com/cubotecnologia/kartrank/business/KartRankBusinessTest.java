@@ -1,25 +1,27 @@
 package br.com.cubotecnologia.kartrank.business;
 
+import br.com.cubotecnologia.kartrank.BaseKartRankTest;
 import br.com.cubotecnologia.kartrank.KartRank;
 import br.com.cubotecnologia.kartrank.model.Kart;
+import br.com.cubotecnologia.kartrank.model.Piloto;
+import br.com.cubotecnologia.kartrank.model.Sumario;
 import br.com.cubotecnologia.kartrank.service.KartRankParser;
 import br.com.cubotecnologia.kartrank.service.KartRankUtils;
 import org.hamcrest.core.Is;
-import org.joda.time.LocalTime;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by henriquemoreno on 21/03/17.
  */
-public class KartRankBusinessTest {
-    private KartRankBusiness kartRankBusiness = new KartRankBusiness();
-
+public class KartRankBusinessTest extends BaseKartRankTest {
     private static final String[] BODY;
+
     static {
         String text = "Hora\t\t\t\t   Piloto\t      Nº Volta   Tempo Volta\t   Velocidade média da volta\n" +
                 "23:49:08.277 \t  038 – F.MASSA\t\t  \t  1\t\t1:02.852 \t\t\t44,275\n" +
@@ -48,11 +50,14 @@ public class KartRankBusinessTest {
         BODY = text.split("\\r?\\n");
     }
 
+    private KartRankBusiness kartRankBusiness = new KartRankBusiness();
+    private KartRank kartRank = new KartRank(new KartRankParser(new KartRankUtils()));
+
     @Test
-    public void testCalcularRanking(){
-        String[] split = BODY;
-        KartRank kartRank = new KartRank(new KartRankParser(new KartRankUtils()));
-        List<Kart> karts = kartRank.parse(Arrays.asList(split));
-        kartRankBusiness.calcularRanking(karts);
+    public void testCriarSumario() {
+        Map<Piloto, List<Kart>> groupByPiloto = kartRank.groupByPiloto(kartRank.parse(Arrays.asList(BODY)));
+        List<Sumario> sumarios = kartRankBusiness.criarSumario(groupByPiloto);
+        assertThat(sumarios.size(), Is.is(6));
     }
+
 }

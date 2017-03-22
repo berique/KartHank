@@ -5,5 +5,6 @@ package br.com.cubotecnologia.kartrank.service;
  */
 public interface IKartRankUtils {
     String[] removeExcessAndSplit(String line);
+
     String[] parsePiloto(String piloto);
 }

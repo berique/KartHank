@@ -3,15 +3,13 @@ package br.com.cubotecnologia.kartrank.service;
 import br.com.cubotecnologia.kartrank.model.Kart;
 import br.com.cubotecnologia.kartrank.model.KartHankEnum;
 import br.com.cubotecnologia.kartrank.model.Piloto;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -19,6 +17,7 @@ import java.util.Map;
 /**
  * Created by henriquemoreno on 21/03/17.
  */
+@Slf4j
 public class KartRankParser implements IKartRankParser {
     private final IKartRankUtils kartRankUtils;
     private Map<String, Integer> mapHeader = new HashMap<String, Integer>();
@@ -47,24 +46,27 @@ public class KartRankParser implements IKartRankParser {
         return field[mapHeader.get(kartHankEnum.value)];
     }
 
-    public Kart readLine(Map<String, Integer> header, String line) {
+    public Kart readLine(Map<String, Integer> header, String line) throws ParseException {
         String[] fields = kartRankUtils.removeExcessAndSplit(line);
         DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.GERMAN);
         df.setParseBigDecimal(true);
 
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("mm:ss.SSS");
+        Piloto piloto = parsePiloto(header, fields);
+        return buildKart(header, fields, df, piloto);
+    }
 
-        try {
-            String[] pilotoParse = kartRankUtils.parsePiloto(get(header, KartHankEnum.PILOTO, fields));
-            return Kart.builder() //
-                    .hora(LocalTime.parse(get(header, KartHankEnum.HORA, fields))) //
-                    .numeroVoltas(Integer.parseInt(get(header, KartHankEnum.NUM_VOLTAS, fields)))
-                    .piloto(new Piloto(pilotoParse[0],pilotoParse[1]))
-                    .tempoVolta(KartRankUtils.PERIOD_FORMATTER.parsePeriod(get(header, KartHankEnum.TEMPO_VOLTA, fields)))
-                    .velocidadeMediaVolta((BigDecimal) df.parseObject(get(header, KartHankEnum.VELOCIDADE_MEDIA_VOLTA, fields)))
-                    .build();
-        } catch (ParseException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+    private Kart buildKart(Map<String, Integer> header, String[] fields, DecimalFormat df, Piloto piloto) throws ParseException {
+        return Kart.builder() //
+                .hora(LocalTime.parse(get(header, KartHankEnum.HORA, fields))) //
+                .numeroVoltas(Integer.parseInt(get(header, KartHankEnum.NUM_VOLTAS, fields)))
+                .piloto(piloto)
+                .tempoVolta(PERIOD_FORMATTER.parsePeriod(get(header, KartHankEnum.TEMPO_VOLTA, fields)).toStandardDuration())
+                .velocidadeMediaVolta((BigDecimal) df.parseObject(get(header, KartHankEnum.VELOCIDADE_MEDIA_VOLTA, fields)))
+                .build();
+    }
+
+    private Piloto parsePiloto(Map<String, Integer> header, String[] fields) {
+        String[] pilotoParse = kartRankUtils.parsePiloto(get(header, KartHankEnum.PILOTO, fields));
+        return new Piloto(pilotoParse[0], pilotoParse[1]);
     }
 }

@@ -1,7 +1,9 @@
 package br.com.cubotecnologia.kartrank.model;
 
-import jdk.nashorn.internal.objects.annotations.Constructor;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Created by henriquemoreno on 21/03/17.

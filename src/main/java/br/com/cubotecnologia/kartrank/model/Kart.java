@@ -4,8 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.joda.time.Duration;
 import org.joda.time.LocalTime;
-import org.joda.time.Period;
 
 import java.math.BigDecimal;
 
@@ -19,9 +19,9 @@ import java.math.BigDecimal;
 public class Kart {
 
     private LocalTime hora;
-    private Piloto piloto;
     private Integer numeroVoltas;
-    private Period tempoVolta;
+    private Duration tempoVolta;
+    private Piloto piloto;
     private BigDecimal velocidadeMediaVolta;
 
 }
